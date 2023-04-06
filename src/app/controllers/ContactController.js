@@ -8,8 +8,8 @@ class ContactController {
   }
 
   async show(req, res) {
-    const { id } = req.params.id;
-    const contact = await ContactRepository.findByID(id);
+    const { id } = req.params;
+    const contact = await ContactRepository.findById(id);
 
     if (!contact) {
       return res.status(404).json({ error: 'User Not Found' });

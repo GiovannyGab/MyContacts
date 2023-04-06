@@ -25,9 +25,9 @@ class ContactRepository {
     });
   }
 
-  findById() {
+  findById(id) {
     return new Promise((resolve) => {
-      resolve(contacts);
+      resolve(contacts.find((contact) => contact.id === id));
     });
   }
 }
