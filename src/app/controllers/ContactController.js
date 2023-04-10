@@ -56,6 +56,10 @@ class ContactController {
     if (contactWithEmail && contactWithEmail.id !== id) {
       return res.sendStatus(400).json({ error: 'o Email ja esta sendo usado' });
     }
+    const contact = await ContactRepository.update(id, {
+      name, email, phone, category_Id,
+    });
+    res.json(contact);
   }
 
   async delete(req, res) {
