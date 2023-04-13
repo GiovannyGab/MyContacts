@@ -17,5 +17,6 @@ module.exports = {
     'prefer-const': 'off',
     'consistent-return': 'off',
     camelcase: 'off',
+    quotes: 'off',
   },
 };

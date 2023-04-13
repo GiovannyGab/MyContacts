@@ -1,5 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
 
+const db = require('../../database/index');
+
 let contacts = [
   {
     id: uuidv4(),
@@ -19,10 +21,9 @@ let contacts = [
 ];
 
 class ContactRepository {
-  findall() {
-    return new Promise((resolve) => {
-      resolve(contacts);
-    });
+  async findall() {
+    const rows = await db.query('SELECT * FROM CONTACTS');
+    return rows;
   }
 
   findById(id) {
@@ -44,20 +45,14 @@ class ContactRepository {
     });
   }
 
-  create({
+  async create({
     name, email, phone, category_Id,
   }) {
-    return new Promise((resolve) => {
-      const newContact = {
-        id: uuidv4(),
-        name,
-        email,
-        phone,
-        category_Id,
-      };
-      contacts.push(newContact);
-      resolve(newContact);
-    });
+    const [row] = await db.query(`INSERT INTO contacts(name,email,phone,category_id)
+    VALUES($1,$2,$3,$4)
+    RETURNING *
+    `, [name, email, phone, category_Id]);
+    return row;
   }
 
   update(id, {
