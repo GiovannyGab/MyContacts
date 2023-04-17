@@ -2,18 +2,18 @@ const db = require('../../database/index');
 
 class ContactRepository {
   async findall() {
-    const rows = await db.query(`SELECT contacts.* category.name AS category_name
+    const rows = await db.query(`SELECT contacts.*, categories.name AS category_name
     FROM CONTACTS
-    LEFT JOIN categories ON categories.id = contacts.category_Id
+    LEFT JOIN categories ON categories.id = contacts.category_id
      ORDER BY contacts.name ASC`);
     return rows;
   }
 
   async findById(id) {
-    const [row] = await db.query(`SELECT contacts.* category.name AS category_name
+    const [row] = await db.query(`SELECT contacts.*, categories.name AS category_name
      FROM CONTACTS
-     LEFT JOIN categories ON categories.id = contacts.category_Id
-      WHERE id = $1`, [id]);
+     LEFT JOIN categories ON categories.id = contacts.category_id
+      WHERE contacts.id = $1`, [id]);
     return row;
   }
 
@@ -38,14 +38,14 @@ class ContactRepository {
   }
 
   async update(id, {
-    name, email, phone, category_Id,
+    name, email, phone, category_id,
   }) {
     const [row] = await db.query(`
     UPDATE contacts
-    SET name= $1,email = $2, phone = $3, category_Id =$4
+    SET name= $1,email = $2, phone = $3, category_id =$4
     WHERE id = $5
     RETURNING *
-    `, [name, email, phone, category_Id, id]);
+    `, [name, email, phone, category_id, id]);
     return row;
   }
 }

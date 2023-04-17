@@ -19,7 +19,7 @@ class ContactController {
 
   async store(req, res) {
     const {
-      name, email, phone, category_Id,
+      name, email, phone, category_id,
     } = req.body;
 
     const contactExists = await ContactRepository.findByEmail(email);
@@ -34,15 +34,15 @@ class ContactController {
     }
 
     const contact = await ContactRepository.create({
-      name, email, phone, category_Id,
+      name, email, phone, category_id,
     });
-    res.json(contact);
+    res.send(contact);
   }
 
   async update(req, res) {
     const { id } = req.params;
     const {
-      name, email, phone, category_Id,
+      name, email, phone, category_id,
     } = req.body;
     const contactExists = await ContactRepository.findById(id);
     if (!contactExists) {
@@ -57,7 +57,7 @@ class ContactController {
       return res.sendStatus(400).json({ error: 'o Email ja esta sendo usado' });
     }
     const contact = await ContactRepository.update(id, {
-      name, email, phone, category_Id,
+      name, email, phone, category_id,
     });
     res.json(contact);
   }
