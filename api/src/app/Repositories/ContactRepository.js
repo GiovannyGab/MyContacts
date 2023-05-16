@@ -1,11 +1,12 @@
 const db = require('../../database/index');
 
 class ContactRepository {
-  async findall() {
+  async findall(orderBy = 'ASC') {
+    const direction = orderBy.toUpperCase() === 'DESC' ? 'DESC' : "ASC";
     const rows = await db.query(`SELECT contacts.*, categories.name AS category_name
     FROM CONTACTS
     LEFT JOIN categories ON categories.id = contacts.category_id
-     ORDER BY contacts.name ASC`);
+     ORDER BY contacts.name ${direction}`);
     return rows;
   }
 
