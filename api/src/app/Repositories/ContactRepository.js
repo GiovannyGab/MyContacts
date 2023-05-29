@@ -29,12 +29,12 @@ class ContactRepository {
   }
 
   async create({
-    name, email, phone, category_Id,
+    name, email, phone, category_id,
   }) {
     const [row] = await db.query(`INSERT INTO contacts(name,email,phone,category_id)
     VALUES($1,$2,$3,$4)
     RETURNING *
-    `, [name, email, phone, category_Id]);
+    `, [name, email, phone, category_id]);
     return row;
   }
 
