@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS categories(
 CREATE TABLE IF NOT EXISTS contacts(
    id uuid NOT NULL UNIQUE DEFAULT public.uuid_generate_v4(),
   "name" VARCHAR NOT NULL,
-  "email" VARCHAR NOT NULL UNIQUE,
+  "email" VARCHAR UNIQUE,
   "phone" VARCHAR,
   category_id UUID,
   FOREIGN KEY(category_id) REFERENCES categories(id)

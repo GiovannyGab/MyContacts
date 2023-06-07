@@ -39,9 +39,6 @@ class ContactController {
     if (!name) {
       return res.status(400).json({ error: 'insira um nome' });
     }
-    if (!phone) {
-      return res.status(400).json({ error: 'insira um telefone para contato' });
-    }
 
     const contact = await ContactRepository.create({
       name,
@@ -99,7 +96,7 @@ class ContactController {
       return res.status(404).json({ error: 'contato não encontrado!' });
     }
     await ContactRepository.delete(id);
-    res.status(204);
+    res.status(204).json({ message: "Deletado com sucesso" });
   }
 }
 
